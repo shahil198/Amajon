@@ -1,17 +1,23 @@
 
 import catchAsyncErrors from '../middlewares/catchAsyncErrors.js';
 import Product from '../models/product.js'
+import ApiFilters from '../utils/apiFilters.js';
 import ErrorHandler from '../utils/errorHandler.js';
 
 // to get all the product /api/v1/product
-export  const  getProducts =async (req,res) =>{
-      const products= await Product.find();
+export  const  getProducts =catchAsyncErrors(async (req,res) =>{
+
+      const apiFilters = new ApiFilters(Product,req.query).search().filter()
+    // const apiFilters = new ApiFilters(Product,req.query).filter()
+
+      const products = await apiFilters.query
+    //   const products= await Product.find();
 
     res.status(200).json({
         message:"getting all the products",
         data:products
     })
-}
+})
 
 //to add product by admin  /api/v1/admin/products
 export const addProducts =catchAsyncErrors(async (req,res) =>{
