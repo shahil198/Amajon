@@ -1,0 +1,20 @@
+{
+  "name": "amajon",
+  "version": "1.0.0",
+  "description": "ecommerce",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev":"SET NODE_ENV=DEVELOPMENT& nodemon backend/app.js",
+    "prod":"SET NODE_ENV=PRODUCTION& nodemon backend/app.js",
+    "seed":"node backend/seeder/seeder.js"
+  },
+  "author": "shahil verma",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.4.0"
+  }
+}
