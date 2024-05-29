@@ -26,7 +26,9 @@ process.on('uncaughtException',(err)=>{
 
 //Routing
 import productRoutes from './routes/product.js';
+import userRoutes  from  './routes/auth.js'
 app.use('/api/v1',productRoutes);
+app.use('/api/v1',userRoutes)
 
 app.use(errorMiddleWare)
 

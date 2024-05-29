@@ -6,15 +6,17 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev":"SET NODE_ENV=DEVELOPMENT& nodemon backend/app.js",
-    "prod":"SET NODE_ENV=PRODUCTION& nodemon backend/app.js",
-    "seed":"node backend/seeder/seeder.js"
+    "dev": "SET NODE_ENV=DEVELOPMENT& nodemon backend/app.js",
+    "prod": "SET NODE_ENV=PRODUCTION& nodemon backend/app.js",
+    "seed": "node backend/seeder/seeder.js"
   },
   "author": "shahil verma",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.0"
   }
 }
