@@ -21,7 +21,7 @@ class ApiFilters{
      const queryCopy= {...this.queryStr};
 
      //removing the keyword field for search
-     const fieldToRemove=['keyword']
+     const fieldToRemove=['keyword','page']
      fieldToRemove.forEach((el)=>delete queryCopy[el]);
  
    
@@ -41,6 +41,13 @@ class ApiFilters{
      this.query=this.query.find(parsedQueryString);
      return this;
 
+    }
+    pagination(resPerPage){
+        let currPage = this.queryStr.page || 1;
+        let skipProduct = resPerPage * (currPage-1);
+
+        this.query= this.query.limit(resPerPage).skip(skipProduct);
+        return this;
     }
 }
 

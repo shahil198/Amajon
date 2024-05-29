@@ -7,13 +7,23 @@ import ErrorHandler from '../utils/errorHandler.js';
 // to get all the product /api/v1/product
 export  const  getProducts =catchAsyncErrors(async (req,res) =>{
 
+    const resPerPage =3;
       const apiFilters = new ApiFilters(Product,req.query).search().filter()
+   
     // const apiFilters = new ApiFilters(Product,req.query).filter()
 
-      const products = await apiFilters.query
-    //   const products= await Product.find();
+      let products = await apiFilters.query
+      const FilteredElement = products.length
+
+      apiFilters.pagination(resPerPage);
+
+      products = await apiFilters.query.clone();
+
 
     res.status(200).json({
+        
+        FilteredElement,
+        resPerPage,
         message:"getting all the products",
         data:products
     })
