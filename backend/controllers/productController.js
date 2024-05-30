@@ -10,6 +10,7 @@ export  const  getProducts =catchAsyncErrors(async (req,res) =>{
     const resPerPage =3;
       const apiFilters = new ApiFilters(Product,req.query).search().filter()
    
+      console.log('req?.user',req?.user)
     // const apiFilters = new ApiFilters(Product,req.query).filter()
 
       let products = await apiFilters.query

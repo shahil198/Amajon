@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 
 const app=express();
 dotenv.config({'path':'backend/config/config.env'});
@@ -12,6 +13,7 @@ import errorMiddleWare from './middlewares/Error.js';
 connectDatabase();
 
 app.use(express.json())
+app.use(cookieParser())
 
 
 //uncaught exception error
