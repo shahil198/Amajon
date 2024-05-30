@@ -10,7 +10,7 @@ export  const  getProducts =catchAsyncErrors(async (req,res) =>{
     const resPerPage =3;
       const apiFilters = new ApiFilters(Product,req.query).search().filter()
    
-      console.log('req?.user',req?.user)
+    //   console.log('req?.user',req?.user)
     // const apiFilters = new ApiFilters(Product,req.query).filter()
 
       let products = await apiFilters.query
@@ -32,7 +32,7 @@ export  const  getProducts =catchAsyncErrors(async (req,res) =>{
 
 //to add product by admin  /api/v1/admin/products
 export const addProducts =catchAsyncErrors(async (req,res) =>{
-    
+    req.body.user= req.user._id
     const product = await Product.create(req.body);
 
     res.status(200).json({
@@ -56,7 +56,7 @@ export const getProductById = catchAsyncErrors(async (req,res,next)=>{
 
 //update product by ID api/v1/products/:id but method will be put
 
-export  const updateProduct  = catchAsyncErrors(async (req,res)=>{
+export  const updateProduct  = catchAsyncErrors(async (req,res,next)=>{
     let product = await Product.findById(req?.params?.id);
 
     if(!product){
@@ -75,9 +75,9 @@ export  const updateProduct  = catchAsyncErrors(async (req,res)=>{
 
 //delete product by id  api/v1/products/:id but method is delete
 
-export const deleteProduct = catchAsyncErrors(async (req,res) =>{
+export const deleteProduct = catchAsyncErrors(async (req,res,next) =>{
+    console.log("+++++++++++++++++")
     const product = await Product.findById(req?.params?.id);
-
     if(!product){
         return next(new ErrorHandler("Product not found!",404))
     }
