@@ -7,6 +7,7 @@ import ErrorHandler from '../utils/errorHandler.js';
 import sendEmail from '../utils/sendEmail.js';
 import { sendToken } from '../utils/sendToken.js';
 import crypto from 'crypto';
+import user from '../models/user.js';
 
 //register user /api/v1/register
 export const registerUser = catchAsyncErrors(async (req,res,next)=>{
@@ -143,4 +144,51 @@ export const resetPassword = catchAsyncErrors( async (req,res,next)=>{
     
 
 
+})
+
+//curr user profile  api/v1/me
+
+export const getProfile = catchAsyncErrors(async (req,res)=>{
+    const user= await User.findById(req?.user?.id);
+
+    res.status(200).json({
+        user,
+    })
+})
+
+//update user password   api/v1/password/update
+
+
+export const updatePassword = catchAsyncErrors( async (req,res,next)=>{
+    const user = await User.findById(req?.user?.id).select('+password');
+
+    const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
+
+    if(!isPasswordMatched){
+        return next( new ErrorHandler("Old password didn't matched",400));
+    }
+
+    user.password = req.body.password;
+
+    await user.save();
+
+    res.status(200).json({
+        success:true
+    })
+})
+
+//update profile /api/v1/me/update
+
+export const updateProfile = catchAsyncErrors(async (req,res,next)=>{
+
+    const newDetails = {
+        email:req.body.email,
+        name:req.body.name
+    }
+  
+    const user = await User.findByIdAndUpdate(req?.user?.id,newDetails,{new:true});
+
+    res.status(200).json({
+        user
+    })
 })

@@ -26,7 +26,13 @@ export default (err,req,res,next)=>{
     }
     // handling jwt token error
     if(err.name==="JsonWebTokenError"){
-        const message=  `Invalide JSON web token, try again!`;
+        const message=  `Invalid JSON web token, try again!`;
+        error = new ErrorHandler(message,400);
+    }
+
+    //handle expired JWT error
+    if(err.name==="TokenExpiredError"){
+        const message=  `Json web token expired, login again.`;
         error = new ErrorHandler(message,400);
     }
 
