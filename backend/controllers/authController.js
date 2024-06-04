@@ -13,6 +13,7 @@ import user from '../models/user.js';
 export const registerUser = catchAsyncErrors(async (req,res,next)=>{
 
     const {name,email,password} = req.body;
+
     const user = await User.create({name,email,password});
 
    
@@ -190,5 +191,62 @@ export const updateProfile = catchAsyncErrors(async (req,res,next)=>{
 
     res.status(200).json({
         user
+    })
+})
+
+//get all users  /api/v1/admin/users
+
+export const getUsers = catchAsyncErrors(async (req,res,next)=>{
+    const users = await User.find();
+
+    res.status(200).json({
+        users
+    })
+})
+
+
+//get particular user  /api/v1/admin/users/:id
+
+
+export const getUserDetails = catchAsyncErrors(async (req,res,next)=>{
+    const user= await User.findById(req.params.id);
+
+    if(!user){
+        return next(new ErrorHandler(`user not found with id: ${req.params.id}`,404));
+    }
+    res.status(200).json({
+        user
+    })
+})
+
+//update the user by admin   /api/v1/admin/users/:id
+export const updateUser = catchAsyncErrors(async (req,res,next)=>{
+    
+    const updatedData = {
+        name:req.body.name,
+        email:req.body.email,
+        role:req.body.role
+
+    }
+    
+    const user = await User.findByIdAndUpdate(req.params.id,updatedData,{new:true})
+    res.status(200).json({
+        user
+    })
+
+})
+
+//delete the user by admin   /api/v1/admin/users/:id
+
+export const deleteUser = catchAsyncErrors(async (req,res,next)=>{
+    const user=await User.findById(req.params.id);
+
+    if(!user){
+        return next(new ErrorHandler(`user not found with id ${req.params.id}`,404));
+    }
+    await user.deleteOne();
+
+    res.status(200).json({
+        success:true
     })
 })
