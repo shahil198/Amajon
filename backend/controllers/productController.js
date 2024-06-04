@@ -43,6 +43,7 @@ export const addProducts =catchAsyncErrors(async (req,res) =>{
 //get product by id   /ap/v1/product/id
 
 export const getProductById = catchAsyncErrors(async (req,res,next)=>{
+  
     const product = await Product.findById(req?.params?.id);
     if(!product){
         return next(new ErrorHandler("Product not found!",404))
@@ -57,6 +58,7 @@ export const getProductById = catchAsyncErrors(async (req,res,next)=>{
 //update product by ID api/v1/products/:id but method will be put
 
 export  const updateProduct  = catchAsyncErrors(async (req,res,next)=>{
+  
     let product = await Product.findById(req?.params?.id);
 
     if(!product){
@@ -76,7 +78,7 @@ export  const updateProduct  = catchAsyncErrors(async (req,res,next)=>{
 //delete product by id  api/v1/products/:id but method is delete
 
 export const deleteProduct = catchAsyncErrors(async (req,res,next) =>{
-    console.log("+++++++++++++++++")
+  
     const product = await Product.findById(req?.params?.id);
     if(!product){
         return next(new ErrorHandler("Product not found!",404))
